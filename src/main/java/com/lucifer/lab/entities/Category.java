@@ -1,9 +1,9 @@
 package com.lucifer.lab.entities;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-//Written By: Waseem
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,24 +17,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name="tbl_users")
-@NoArgsConstructor
-@Getter
-@Setter
-public class User {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	@Column(nullable = false, length = 100 )
-	private String name;
-	private String email;
-	private String password;
-	private String about;
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private List<Post> posts = new ArrayList<>();
 
+@Entity
+@Table(name="tbl_categories")
+@NoArgsConstructor
+@Setter
+@Getter
+public class Category {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer categoryId;
+	
+	@Column(name="title", nullable = false)
+	private String categoryTitle;
+	
+	@Column(name="description")
+	private String categoryDescription;
+	
+	
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private List<Post> posts = new ArrayList<>();
 }
