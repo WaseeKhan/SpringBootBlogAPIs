@@ -2,7 +2,7 @@ package com.lucifer.lab.services;
 
 import java.util.List;
 
-import com.lucifer.lab.entities.Post;
+
 import com.lucifer.lab.payloads.PostDto;
 import com.lucifer.lab.payloads.PostResponse;
 
@@ -20,7 +20,7 @@ public interface PostService {
 	
 	
 	//get all posts
-	PostResponse getAllPost(Integer pageNo, Integer pageSize);
+	PostResponse getAllPost(Integer pageNo, Integer pageSize,String sortBy, String sortDir);
 	
 	
 	//get single post
