@@ -1,4 +1,7 @@
 package com.lucifer.lab.payloads;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -32,5 +35,7 @@ public class UserDto {
 	@NotEmpty
 	@Size(min=5,max=200, message="Name must be min of 4 character!")
 	private String about;
+	
+	private Set<RoleDto> roles  = new HashSet<>();
 	
 }

@@ -1,0 +1,6 @@
+Some Issue Fixed:
+
+Download Source and javadoc :
+Run mvn command from below site:
+https://www.baeldung.com/maven-download-sources-javadoc
+---> mvn dependency:sources dependency:resolve -Dclassifier=javadoc
