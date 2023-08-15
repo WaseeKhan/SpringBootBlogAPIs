@@ -1,6 +1,9 @@
 package com.lucifer.lab.controllers;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.lucifer.lab.entities.User;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.lucifer.lab.exceptions.ApiException;
 import com.lucifer.lab.payloads.JwtAuthRequest;
@@ -22,14 +22,17 @@ import com.lucifer.lab.payloads.UserDto;
 import com.lucifer.lab.security.JwtTokenHelper;
 import com.lucifer.lab.services.UserService;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+
 @RestController
 @RequestMapping("/api/v1/auth/")
+
 public class AuthController {
-	
-	
 	@Autowired
 	private JwtTokenHelper jwtTokenHelper;
-	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -46,8 +49,12 @@ public class AuthController {
 		this.authenticate(request.getUsername(), request.getPassword());
 		UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
 		String token = this.jwtTokenHelper.generateToken(userDetails);
+
 		JwtAuthResponse response = new JwtAuthResponse();
 		response.setToken(token);
+		//added to get user details also for ui
+		response.setUser(this.modelMapper.map((User)userDetails, UserDto.class));
+		//end
 		return new ResponseEntity<JwtAuthResponse> (response,HttpStatus.OK);
 	}
 	
@@ -69,10 +76,10 @@ public class AuthController {
 	//register new user API
 	
 	@PostMapping("/register")
-	public ResponseEntity<UserDto> register(@RequestBody UserDto userDto){
+	public ResponseEntity<UserDto> register(@Valid @RequestBody UserDto userDto){
 		UserDto registeredUser = this.userService.registerNewUser(userDto);
 		return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
-		
+
 	}
 
 }

@@ -11,6 +11,9 @@ import com.lucifer.lab.config.AppConstants;
 import com.lucifer.lab.entities.Role;
 import com.lucifer.lab.repositories.RoleRepo;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 @SpringBootApplication
 public class SpringBlogApplication implements CommandLineRunner{
@@ -46,8 +49,8 @@ public class SpringBlogApplication implements CommandLineRunner{
 			normalRole.setId(AppConstants.NORMAL_USER);
 			normalRole.setName("ROLE_NORMAL");
 			
-			java.util.List<Role> roles = java.util.List.of(adminRole,normalRole);
-			java.util.List<Role> result = this.roleRepo.saveAll(roles);
+			List<Role> roles = Arrays.asList(adminRole, normalRole);
+			List<Role> result = this.roleRepo.saveAll(roles);
 			
 			result.forEach(r->{
 				System.out.println(r.getName());
@@ -60,5 +63,5 @@ public class SpringBlogApplication implements CommandLineRunner{
 		
 	}
 	
-	//need to implements,  ADMIN user create  automatically here same as above 
+	//need to implement,  ADMIN user create  automatically here same as above
 }

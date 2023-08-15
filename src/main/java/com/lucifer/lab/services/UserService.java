@@ -1,6 +1,7 @@
 package com.lucifer.lab.services;
 //Written By: Waseem
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lucifer.lab.payloads.UserDto;
 import java.util.List;
 

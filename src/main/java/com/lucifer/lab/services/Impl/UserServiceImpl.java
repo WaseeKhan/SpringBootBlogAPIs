@@ -3,8 +3,12 @@ package com.lucifer.lab.services.Impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lucifer.lab.payloads.ApiResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +23,7 @@ import com.lucifer.lab.exceptions.*;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	private UserRepo userRepo;
 	
@@ -113,6 +117,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto registerNewUser(UserDto userDto) {
 		User user = this.modelMapper.map(userDto, User.class);
+
+		if(userDto.getEmail().equalsIgnoreCase(user.getEmail())){
+			System.out.println("Email Already Exists. Please Try With Different Email Address. ");
+
+		}
+
+
 		
 		//encoded password
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
@@ -126,8 +137,9 @@ public class UserServiceImpl implements UserService {
 		
 		
 		User newUser = this.userRepo.save(user);
-		
+
 		return this.modelMapper.map(newUser, UserDto.class);
+
 	}
 
 }

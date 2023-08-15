@@ -4,3 +4,7 @@ Download Source and javadoc :
 Run mvn command from below site:
 https://www.baeldung.com/maven-download-sources-javadoc
 ---> mvn dependency:sources dependency:resolve -Dclassifier=javadoc
+
+
+-------Swagger URL
+http://localhost:8100/swagger-ui/index.html

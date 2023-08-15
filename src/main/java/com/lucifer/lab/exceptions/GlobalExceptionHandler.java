@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.lucifer.lab.payloads.ApiResponse;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler{
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException ex){
@@ -25,14 +27,11 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> handleMethodArgsNotValidException(MethodArgumentNotValidException ex){
 		Map<String, String> resp = new HashMap<>();
-		
 		ex.getBindingResult().getAllErrors().forEach((error)->{
 			String fieldname = ((FieldError)error).getField();
 			String message = error.getDefaultMessage();
 			resp.put(fieldname, message);
 		});
-		
-		
 		return new ResponseEntity<Map<String,String>>(resp,HttpStatus.BAD_REQUEST);
 	}
 	
@@ -43,5 +42,15 @@ public class GlobalExceptionHandler {
 		ApiResponse apiResponse = new ApiResponse(message,true);
 		return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
 				
+	}
+
+
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<ApiResponse> DataIntegrityViolationExceptionHandler(DataIntegrityViolationException ex, WebRequest req){
+		req.getDescription(false);
+		String message = ex.getMessage();
+		ApiResponse apiResponse = new ApiResponse(message,false);
+		return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
+
 	}
 }
