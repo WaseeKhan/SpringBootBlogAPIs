@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 
 //Written By: Waseem
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,5 +55,11 @@ public class UserDto {
 	@JsonIgnore
 	public String getPassword(){
 		return this.password;
+	}
+
+	//Setting password
+	@JsonProperty
+	public void setPassword(String password){
+		this.password=password;
 	}
 }
