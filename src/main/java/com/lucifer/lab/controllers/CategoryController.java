@@ -23,7 +23,7 @@ import com.lucifer.lab.services.CategoryService;
 
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
 	@Autowired

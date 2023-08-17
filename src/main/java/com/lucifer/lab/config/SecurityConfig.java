@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.authorizeHttpRequests()
 		.antMatchers(PUBLIC_URLS).permitAll()
 		.antMatchers(PUBLIC_URLS).permitAll()
-//		.antMatchers(HttpMethod.GET).permitAll() ---allowed all get methods
+		.antMatchers(HttpMethod.GET).permitAll() //allow all get methods
 		.anyRequest()
 		.authenticated()
 		.and()
@@ -109,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			config.addAllowedMethod("*");
 			source.registerCorsConfiguration("/**", config);
 			FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-			bean.setOrder(0);
+			bean.setOrder(-110);
 			return bean;
 		}
 	}

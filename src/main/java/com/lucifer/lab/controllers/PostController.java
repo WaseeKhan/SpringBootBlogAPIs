@@ -31,7 +31,7 @@ import com.lucifer.lab.services.FileService;
 import com.lucifer.lab.services.PostService;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/v1")
 public class PostController {
 	
 	@Autowired
